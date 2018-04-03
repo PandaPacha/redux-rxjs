@@ -1,0 +1,1 @@
+export const distanceSelector = state => state.click.distance
