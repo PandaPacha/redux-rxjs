@@ -1,32 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { pairwise } from "rxjs/operators";
-import Rx from "rxjs";
 
-import { handleClick } from "../../redux/click/actions";
+import { handleClick, handleClickXY } from "../../redux/click/actions";
 import { distanceSelector } from "../../redux/click/selectors";
 
 export class MouseClickComponent extends Component {
   componentWillMount() {
-    const clicks = Rx.Observable.fromEvent(document, "click")
-      .debounceTime(400)
-      .pairwise()
-      .scan(
-        (acc, lastPairOfClicks) =>
-          acc + this.calculateDistance(lastPairOfClicks),
-        0
-      )
-      .subscribe(distance => this.props.handleClick(distance));
-  }
-
-  calculateDistance = pairOfClicks => {
-    const x0 = pairOfClicks[0].clientX;
-    const y0 = pairOfClicks[0].clientY;
-    const x1 = pairOfClicks[1].clientX;
-    const y1 = pairOfClicks[1].clientY;
-    const distance = Math.sqrt(Math.pow(x0 - x1, 2) + Math.pow(y0 - y1, 2));
-    return distance;
-  };
+    document.addEventListener("click", e => this.props.handleClickXY(e.clientX, e.clientY))
+}
 
   render() {
     return <div>Total distance: {this.props.dist}</div>;
@@ -39,6 +20,6 @@ const mapStateToProps = state => {
   };
 };
 
-export const MouseClick = connect(mapStateToProps, { handleClick })(
+export const MouseClick = connect(mapStateToProps, { handleClick, handleClickXY })(
   MouseClickComponent
 );
