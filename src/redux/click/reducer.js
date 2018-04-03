@@ -1,19 +1,25 @@
-import {MOUSE_CLICK} from './actions'
+import { CLICK_TOTAL, CLICK_XY } from "./actions";
 
 const initialState = {
-    x: null,
-    y: null,
-    distance: 0,
-}
+  x: null,
+  y: null,
+  distance: 0
+};
 
 export const click = (state = initialState, action) => {
-    switch (action.type) {
-    case MOUSE_CLICK:
+  switch (action.type) {
+    case CLICK_TOTAL:
       return {
         ...state,
-        distance: action.payload.distance, //state.distance + action.payload.distance,
-      }
+        distance: action.payload.distance,
+      };
+    case CLICK_XY:
+      return {
+        ...state,
+        x: action.payload.x,
+        y: action.payload.y,
+      };
     default:
-      return state
-    }
-}
+      return state;
+  }
+};
