@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Rx from "rxjs";
 
 import { handleClick, handleClickXY } from "../../redux/click/actions";
 import { distanceSelector } from "../../redux/click/selectors";
